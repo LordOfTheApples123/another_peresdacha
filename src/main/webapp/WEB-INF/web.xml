@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+
+    <servlet>
+        <servlet-name>clientServlet</servlet-name>
+        <servlet-class>com.another_project.servlet.ClientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>autoServlet</servlet-name>
+        <servlet-class>com.another_project.servlet.AutoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateAutoServlet</servlet-name>
+        <servlet-class>com.another_project.servlet.UpdateAutoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>clientProfile</servlet-name>
+        <servlet-class>com.another_project.servlet.ClientProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>clientServlet</servlet-name>
+        <url-pattern>/client</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>autoServlet</servlet-name>
+        <url-pattern>/auto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateAutoServlet</servlet-name>
+        <url-pattern>/updateauto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>clientProfile</servlet-name>
+        <url-pattern>/clientprofile</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
