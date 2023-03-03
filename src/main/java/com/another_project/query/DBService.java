@@ -49,8 +49,8 @@ public class DBService {
     }
 
     public void insertAuto(Auto auto) throws SQLException {
-        PreparedStatement st = connection.prepareStatement(SQLBuilder.insert("auto"));
-        st.setString(1, auto.getModel());
+        PreparedStatement st = connection.prepareStatement(SQLBuilder.insert("auto"));// INSERT INTO auto (model, number) values (?,?)
+        st.setString(1, auto.getModel()); //DROP auto
         st.setString(2, auto.getNumber());
         st.executeUpdate();
         st.close();

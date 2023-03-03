@@ -35,6 +35,7 @@ public class UpdateAutoServlet extends HttpServlet {
         String number = req.getParameter("number");
         try {
             dbService.updateAuto(new Auto(id, model, number));
+            resp.sendRedirect(req.getContextPath()+"/auto");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

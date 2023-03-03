@@ -63,5 +63,6 @@ public class ClientProfile extends HttpServlet {
         catch(SQLException e){
             throw new RuntimeException(e);
         }
+        resp.sendRedirect(req.getContextPath()+"/clientprofile?update=" + req.getParameter("prev_id"));
     }
 }

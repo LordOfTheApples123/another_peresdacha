@@ -9,7 +9,7 @@ public class SQLBuilder {
     private static final String VIOLATION = "violation (client_id, auto_id, descr) values (?, ?, ?)";
 
 
-    public static String getAll(String table) {
+    public static String getAll(String table) {//"auto"
         return SELECT + table;
     }
 
@@ -43,7 +43,7 @@ public class SQLBuilder {
     }
 
     public static String findClientByName(String name) {
-        return SELECT + "client WHERE name = " + name;
+        return SELECT + "client WHERE name = '" + name + "'";
     }
 
     public static String findAutoByModel(String model) {

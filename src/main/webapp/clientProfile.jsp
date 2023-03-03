@@ -12,6 +12,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <% Client client = (Client) request.getAttribute("client");
@@ -25,6 +26,7 @@
         <%=client.getId()%>
         <label for="name">name: </label>
         <input type="hidden" name="id" id="id" required value = "<%=client.getId()%>">
+        <input type="hidden" name = "prev_id" id = "prev_id" value = "<%=client.getId()%>">
         <input type = "hidden" name = "action" value="update">
 
     </div>
@@ -42,6 +44,7 @@
     <label for="descr">name: </label>
     <input type="text" name = "descr" id="descr" required>
     <input type = "hidden" name = "action" value="add_violation">
+    <input type="hidden" name = "prev_id" value = "<%=client.getId()%>">
     <input type = "submit" value="add">
 </form>
 
@@ -51,6 +54,7 @@
 <label for="auto_id">id of auto: </label>
 <input type="number" name = "auto_id" id="auto_id" required>
 <input type = "hidden" name = "action" value="add_rent">
+    <input type="hidden" name = "prev_id"  value = "<%=client.getId()%>">
 <input type = "submit" value = "add">
 </form>
 <h1>rent history</h1>
@@ -58,14 +62,17 @@
     <tr>violation</tr>
     <tr></tr>
     <% if(violations != null){for(Violation violation: violations){ %>
+    <tr>
         <td><%=violation.getDescr()%></td>
 
     <td><form action="${pageContext.request.contextPath}/clientprofile" method="post">
         <input type = "hidden" name = "id" value = "<%=violation.getId()%>">
         <input type = "hidden" name = "action" value="delete_violation">
+        <input type="hidden" name = "prev_id" value = "<%=client.getId()%>">
         <input type = "submit" value="delete">
 
     </form></td>
+    </tr>
     <% }
     }%>
 </table>
@@ -76,6 +83,7 @@
     <tr></tr>
     <% if(rentedAutos !=null){
         for(Auto rentedAuto: rentedAutos){ %>
+    <tr>
     <td><%=rentedAuto.getModel()%></td>
     <td><%=rentedAuto.getNumber()%></td>
 
@@ -83,8 +91,10 @@
         <input type = "hidden" name = "auto_id" value = "<%=rentedAuto.getId()%>">
         <input type = "hidden" name = "client_id" value = "<%=client.getId()%>">
         <input type = "hidden" name = "action" value="delete_rent">
+        <input type="hidden" name = "prev_id" value = "<%=client.getId()%>">
         <input type = "submit" value="delete">
     </form></td>
+    </tr>
     <% }
     }
     %>

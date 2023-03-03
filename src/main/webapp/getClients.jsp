@@ -30,7 +30,7 @@
 <h1>find by id</h1>
 
 <form action="${pageContext.request.contextPath}/client" method = "get">
-    <input type="hidden" name="action" value="find"/>
+    <input type="hidden" name="action" value="find_id"/>
     <label for="find_id">id:</label><br>
     <input type = "number" name="find_id" id = "find_id">
     <button type="submit">find</button>
@@ -74,12 +74,17 @@
     <tr>
         <td><%= client.getId() %></td>
         <td><%= client.getName() %></td>
-        <td><% for(Auto auto: rentedAutos){ %>
+        <td><% if(rentedAutos != null){
+            for(Auto auto: rentedAutos){ %>
             <div><%="model : " + auto.getModel() + ", number: " + auto.getNumber() + ";\n" %></div>
-        <% } %></td>
-        <td><% for(Violation violation: violations){ %>
+            <% }
+            } %></td>
+        <td><% if(violations != null){
+            for(Violation violation: violations){ %>
             <%=violation.getDescr() + ";\n" %>
-            <% } %></td>
+            <% }
+            }
+            %></td>
 
         <td><form action="${pageContext.request.contextPath}/clientprofile" method="get">
             <input type = "hidden" name = "update" value = <%=client.getId()%>>

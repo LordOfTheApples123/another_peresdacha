@@ -1,6 +1,8 @@
 package com.another_project.servlet;
 
+import com.another_project.entity.Auto;
 import com.another_project.entity.Client;
+import com.another_project.entity.Violation;
 import com.another_project.query.DBService;
 import com.another_project.query.RSParser;
 import jakarta.servlet.ServletException;
@@ -30,7 +32,7 @@ public class ClientServlet extends HttpServlet {
 
             List<Client> clients = new ArrayList<>();
             if (req.getParameter("action") != null) {
-                if (req.getParameter("action").equals("find")) {
+                if (req.getParameter("action").equals("find_id")) {
                     clients.addAll(RSParser.parseClient(dbService.find("client", Long.parseLong(req.getParameter("find_id")))));
                 } else if (req.getParameter("action").equals("find_name")) {
                     clients.addAll(RSParser.parseClient(dbService.findClientByName(req.getParameter("find_name"))));
@@ -69,10 +71,30 @@ public class ClientServlet extends HttpServlet {
         } else if (req.getParameter("action").equals("delete")) {
             long id = Long.parseLong(req.getParameter("delete"));
             try {
+                Client client = RSParser.parseClient(dbService.find("client", id)).get(0);
+                List<Violation> violations = RSParser.parseViolation(dbService.findClientViolations(client.getId()));
+                client.setViolations(violations);
+                List<Auto> rentedAutos = RSParser.parseAuto(dbService.findClientRentedAutos(client.getId()));
+                client.setRentedAutos(rentedAutos);
+
+                if(!violations.isEmpty()){
+                    for(Violation violation: violations){
+                        dbService.delete("violation", violation.getId());
+                    }
+                }
+
+                if(!rentedAutos.isEmpty()){
+                    for(Auto auto: rentedAutos){
+                        dbService.deleteFromRent(auto.getId(), client.getId());
+                    }
+                }
+
                 dbService.delete("client", id);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
         }
+        resp.sendRedirect(req.getContextPath()+"/client");
     }
 }
